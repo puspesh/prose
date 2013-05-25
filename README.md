@@ -4,14 +4,27 @@ Prose provides a beatifully simple content authoring environment for [CMS-free w
 
 [Read more about Prose](http://prose.io/#about)
 
-## Setting up Prose with your site
+Setup instructions - 
+(Thanks to http://www.maxmasnick.com/2012/07/03/prose/)
 
-Prose supports configuration settings with a variety of options making it easy to adjust the application to support your needs on a project. You can see a list of [options on the wiki page](https://github.com/prose/prose/wiki/Configuration).
+**Step 1: Gatekeeper**
+Prose uses a Node application called Gatekeeper to authenticate with GitHub. I went ahead and set up my own instance of this application on Heroku. This is pretty easy to do:
 
-## Installation and developing
+* Register a new application with GitHub’s API. Set the callback URL to http://prose.dev Note your API id and secret.
+* Clone Gatekeeper locally.
+* In your local gatekeeper/ folder, run heroku create gatekeeper-yourname.
+Then run heroku config:add OAUTH_CLIENT_ID=GITHUB_CLIENT_ID OAUTH_CLIENT_SECRET=GITHUB_CLIENT_SECRET NODE_ENV=production, replacing the client and secret placeholders with your actual IDs.
+* Run git push heroku.
 
-Prose is hosted at [Prose.io](http://prose.io), or you can use on your own server. For installation instructions and contributing guidelines, please [read contributing.md](CONTRIBUTING.md).
+**Step 2: Prose**
 
-To host your own GitHub webhook Jekyll server, check out [Jekyll-Hook](https://github.com/developmentseed/jekyll-hook).
+* Clone Prose locally.
+* Edit the prose/oauth.json file to add your github client id under oauth_client_id and gatekeeper-yourname.herokuapp.com for the gatekeeper_url. 
+* Add rule to make prose.dev redirect to localhost:8000 to your /etc/hosts file.
+* Start a basic python HTTPServer using `python -m SimpleHTTPServer` 
+* Prose should be up with oauth setup at http://localhost:8000/
+
+
+
 
 *Prose is developed and maintained by [Development Seed](http://developmentseed.org).*
